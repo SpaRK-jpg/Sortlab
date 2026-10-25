@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>SortLab — Sorting Algorithms Visualizer</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#visualizer" aria-label="SortLab home"><span class="brand-mark">S</span><span>SortLab</span></a>
+    <p class="tagline">Interactive Sorting Algorithms Visualizer</p>
+    <nav aria-label="Main navigation"><a href="#visualizer">Visualizer</a><a href="#algorithms">Algorithms</a><a href="#about">About</a></nav>
+  </header>
+
+  <main>
+
+
+    <section id="visualizer" class="workspace" aria-labelledby="visualizer-title">
+      <div class="section-heading"><div><p class="eyebrow">THE PLAYGROUND</p><h2 id="visualizer-title">Visualizer</h2></div><span class="status-pill" id="status-pill">Ready</span></div>
+
+      <div class="algorithm-tabs" role="group" aria-label="Choose sorting algorithm">
+        <button class="algorithm-tab active" data-algorithm="bubble" aria-pressed="true"><span class="tab-number">01</span><span><strong>Bubble Sort</strong><small>Compare neighbors</small></span></button>
+        <button class="algorithm-tab" data-algorithm="selection" aria-pressed="false"><span class="tab-number">02</span><span><strong>Selection Sort</strong><small>Find the minimum</small></span></button>
+        <button class="algorithm-tab" data-algorithm="insertion" aria-pressed="false"><span class="tab-number">03</span><span><strong>Insertion Sort</strong><small>Insert each key</small></span></button>
+      </div>
+
+      <div class="input-row">
+        <div class="field-group"><label for="array-input">Your array <span>(comma-separated integers)</span></label><input id="array-input" type="text" value="5, 3, 8, 1, 2" autocomplete="off" spellcheck="false" aria-describedby="input-help input-error"><div class="field-hints"><span id="input-help">2–30 values · duplicates and negatives allowed</span><span id="input-error" class="error-message" role="alert"></span></div></div>
+        <div class="input-actions"><button id="apply-btn" class="button button-primary">Apply array</button><button id="random-btn" class="button">Random array</button><button id="sample-btn" class="button">Load sample</button></div>
+      </div>
+
+      <div class="visualizer-layout">
+      <div class="visualizer-panel">
+        <div class="visualizer-topline"><div><span class="panel-label">ARRAY VISUALIZATION</span><span id="array-count" class="muted">5 elements</span></div><button id="clear-btn" class="text-button">Clear log</button></div>
+        <div id="chart" class="chart" role="img" aria-label="Array bars visualization"><div class="empty-chart">Apply an array to begin.</div></div>
+        <div class="legend" aria-label="Bar color legend">
+          <span><i class="legend-swatch swatch-default"></i>Unsorted</span><span><i class="legend-swatch swatch-compare"></i>Comparing</span><span><i class="legend-swatch swatch-swap"></i>Swap / shift</span><span><i class="legend-swatch swatch-key"></i>Key</span><span><i class="legend-swatch swatch-min"></i>Minimum</span><span><i class="legend-swatch swatch-sorted"></i>Sorted</span>
+        </div>
+        <div class="transport">
+          <div class="transport-buttons"><button id="play-btn" class="button button-primary"><span aria-hidden="true">▶</span> Play</button><button id="pause-btn" class="button" disabled>Pause</button><button id="step-btn" class="button">Step forward <span aria-hidden="true">→</span></button><button id="reset-btn" class="button">Reset</button></div>
+          <label class="speed-control" for="speed-select">Speed<select id="speed-select"><option value="1100">Slow</option><option value="550" selected>Normal</option><option value="180">Fast</option></select></label>
+        </div>
+      </div>
+
+      <div class="stats-grid" aria-label="Execution statistics">
+        <div class="stat"><span>Comparisons</span><strong id="comparisons">0</strong></div><div class="stat"><span>Swaps</span><strong id="swaps">0</strong></div><div class="stat"><span>Shifts</span><strong id="shifts">0</strong></div><div class="stat"><span>Array writes</span><strong id="writes">0</strong></div>
+        <div class="stat stat-wide"><span>Current step</span><strong><span id="current-step">0</span><small> / <span id="total-steps">0</span> events</small></strong></div>
+        <div class="stat stat-wide"><span>Execution status</span><strong id="execution-status">Ready</strong></div>
+      </div>
+      </div><!-- /.visualizer-layout -->
+      <div id="completion" class="completion" hidden aria-live="polite">
+        <div><span class="completion-icon">✓</span><div><strong>Array sorted successfully</strong><p>Your final array is in ascending order.</p></div></div>
+        <div class="completion-arrays"><span>Original <code id="original-result"></code></span><span>Sorted <code id="sorted-result"></code></span></div>
+      </div>
+    </section>
+
+    <section class="details-grid" id="algorithms">
+      <article class="info-panel algorithm-info"><p class="eyebrow">UNDER THE HOOD</p><h2 id="algorithm-title">Bubble Sort</h2><p id="overview">Bubble Sort repeatedly compares neighboring values and swaps them when they are out of order. Large values gradually move toward the end.</p>
+        <h3>How it works</h3><ol id="how-it-works"><li>Compare two neighboring elements.</li><li>Swap them if the left value is larger.</li><li>Repeat passes until no swaps are needed.</li></ol>
+        <div class="properties"><div><span>Strategy</span><strong id="strategy">Adjacent exchanges</strong></div><div><span>Stable</span><strong id="stable">Yes</strong></div><div><span>In place</span><strong id="in-place">Yes</strong></div><div><span>Auxiliary space</span><strong>O(1)</strong></div></div>
+      </article>
+      <article class="info-panel complexity-panel"><p class="eyebrow">PERFORMANCE</p><h2>Time complexity</h2><p class="subtle">Growth with input size, not a promise of exact runtime.</p>
+        <div class="complexity-table"><div class="complexity-row complexity-head"><span>Case</span><span>Complexity</span></div><div class="complexity-row"><span>Best</span><strong id="best-complexity">O(n)</strong></div><div class="complexity-row"><span>Average</span><strong id="average-complexity">O(n²)</strong></div><div class="complexity-row"><span>Worst</span><strong id="worst-complexity">O(n²)</strong></div></div>
+        <p id="complexity-note" class="note">Bubble Sort reaches O(n) in the best case because this implementation stops early when a pass makes no swaps.</p>
+      </article>
+      <article class="info-panel pseudocode-panel"><div class="panel-title-row"><div><p class="eyebrow">FOLLOW THE LOGIC</p><h2>Pseudocode</h2></div><span class="live-indicator"><i></i> Live</span></div><ol id="pseudocode" class="pseudocode"></ol><p class="subtle code-help">The highlighted line follows the current recorded event.</p></article>
+      <article class="info-panel log-panel"><div class="panel-title-row"><div><p class="eyebrow">EVENT HISTORY</p><h2>Operation log</h2></div><span id="log-count" class="log-count">0 events</span></div><ol id="operation-log" class="operation-log" aria-live="polite"><li class="log-empty">Your operations will appear here as you step through the algorithm.</li></ol></article>
+    </section>
+
+    <section id="about" class="about-section"><p class="eyebrow">WHY SORTING MATTERS</p><h2>Order makes data easier to use.</h2><div class="about-grid"><article><span class="about-index">01</span><h3>What is sorting?</h3><p>A sorting algorithm arranges values into a chosen order, here ascending from smallest to largest.</p></article><article><span class="about-index">02</span><h3>Why does it matter?</h3><p>Ordered data can be easier to scan, compare, summarize, and search. Sorting is a building block for many programs.</p></article><article><span class="about-index">03</span><h3>Three strategies</h3><p>Bubble swaps neighbors, Selection searches for the minimum, and Insertion places each new key into an already-sorted section.</p></article><article><span class="about-index">04</span><h3>Read the statistics</h3><p>Comparisons inspect values; swaps exchange two positions; shifts move values; writes record array assignments. Counts depend on both input and algorithm.</p></article></div><p class="about-footnote">Big-O describes how work tends to grow as the array gets larger. A single run is only one example—no algorithm is always fastest for every input.</p></section>
+  </main>
+  <footer><a class="brand footer-brand" href="#visualizer"><span class="brand-mark">S</span><span>SortLab</span></a><span>Built for curious minds. Learn one operation at a time.</span><a href="#page-title">Back to top ↑</a></footer>
+</body>
+</html>
